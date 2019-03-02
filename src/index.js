@@ -4,24 +4,46 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const name =' JSX element' ;
-const elemtSample = <h1>Test Elemnt {name} </h1> ;
-function tick(){
-const elementDate = ( 
-    <div>
-        <h1>H1</h1>
-        <h2> It is  {new Date().toLocaleTimeString()}. </h2>
-    </div>
-);
-ReactDOM.render( elementDate, document.getElementById('root'));
-}
-
-setInterval(tick, 100)
+class Clock extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {date: new Date()};
+    }
+  
+    componentDidMount() {
+      this.timerID = setInterval(
+        () => this.tick(),
+        1000
+      );
+    }
+  
+    componentWillUnmount() {
+      clearInterval(this.timerID);
+    }
+  
+    tick() {
+      this.setState({
+        date: new Date()
+      });
+    }
+  
+    render() {
+      return (
+        <div>
+          <h1>React Timer Component handled by state!</h1>
+          <h2>Time is {this.state.date.toLocaleTimeString()} </h2>
+        </div>
+      );
+    }
+  }
+  
+  ReactDOM.render(
+    <Clock />,
+    document.getElementById('root')
+  );
+// ReactDOM.render(<App />, document.getElementById('root'));
 //var element = React.createElement('h1',  {className:'greeting'} , 'Hello First offline  React App')
 //ReactDOM.render(element, document.getElementById('root'));
-//ReactDOM.render(elementDate, document.getElementById('root')) ;
-
-//ReactDOM.render(elemtSample, document.getElementById('root')) ;
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
